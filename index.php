@@ -12,6 +12,7 @@ $nim        = "";
 $nama       = "";
 $alamat     = "";
 $fakultas   = "";
+$judul      = "";
 $sukses     = "";
 $error      = "";
 
@@ -38,6 +39,7 @@ if ($op == 'edit') {
     $nim        = $r1['nim'];
     $nama       = $r1['nama'];
     $alamat     = $r1['alamat'];
+    $judul      = $r1['judul'];
     $fakultas   = $r1['fakultas'];
 
     if ($nim == '') {
@@ -48,11 +50,13 @@ if (isset($_POST['simpan'])) { //untuk create
     $nim        = $_POST['nim'];
     $nama       = $_POST['nama'];
     $alamat     = $_POST['alamat'];
+    $judul      = $_POST['judul'];
     $fakultas   = $_POST['fakultas'];
+    
 
     if ($nim && $nama && $alamat && $fakultas) {
         if ($op == 'edit') { //untuk update
-            $sql1       = "update mahasiswa set nim = '$nim',nama='$nama',alamat = '$alamat',fakultas='$fakultas' where id = '$id'";
+            $sql1       = "update mahasiswa set nim = '$nim',nama='$nama',alamat = '$alamat',judul = '$judul',fakultas='$fakultas' where id = '$id'";
             $q1         = mysqli_query($koneksi, $sql1);
             if ($q1) {
                 $sukses = "Data berhasil diupdate";
@@ -60,7 +64,7 @@ if (isset($_POST['simpan'])) { //untuk create
                 $error  = "Data gagal diupdate";
             }
         } else { //untuk insert
-            $sql1   = "insert into mahasiswa(nim,nama,alamat,fakultas) values ('$nim','$nama','$alamat','$fakultas')";
+            $sql1   = "insert into mahasiswa(nim,nama,alamat,judul,fakultas) values ('$nim','$nama','$alamat','$judul','$fakultas')";
             $q1     = mysqli_query($koneksi, $sql1);
             if ($q1) {
                 $sukses     = "Berhasil memasukkan data baru";
@@ -98,7 +102,7 @@ if (isset($_POST['simpan'])) { //untuk create
         <!-- untuk memasukkan data -->
         <div class="card">
             <div class="card-header">
-                Create / Edit Data
+                Selamat Datang Pengunjung!
             </div>
             <div class="card-body">
                 <?php
@@ -141,6 +145,16 @@ if (isset($_POST['simpan'])) { //untuk create
                         </div>
                     </div>
                     <div class="mb-3 row">
+                        <label for="judul" class="col-sm-2 col-form-label">judul</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="judul" id="judul">
+                                <option value="">- Pilih Judul -</option>
+                                <option value="For My Family" <?php if ($judul == "For My Family") echo "selected" ?>>For My Family</option>
+                                <option value="Behind the Scene" <?php if ($judul == "Behind the Scene") echo "selected" ?>>Behind the Scene</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
                         <label for="fakultas" class="col-sm-2 col-form-label">Fakultas</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="fakultas" id="fakultas">
@@ -152,6 +166,7 @@ if (isset($_POST['simpan'])) { //untuk create
                     </div>
                     <div class="col-12">
                         <input type="submit" name="simpan" value="Simpan Data" class="btn btn-primary" />
+                        <button type="button" class="btn btn-warning">Chat Admin</button>
                     </div>
                 </form>
             </div>
@@ -170,6 +185,7 @@ if (isset($_POST['simpan'])) { //untuk create
                             <th scope="col">NIM</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Alamat</th>
+                            <th scope="col">Judul</th>
                             <th scope="col">Fakultas</th>
                             <th scope="col">Aksi</th>
                         </tr>
@@ -185,6 +201,7 @@ if (isset($_POST['simpan'])) { //untuk create
                             $nama       = $r2['nama'];
                             $alamat     = $r2['alamat'];
                             $fakultas   = $r2['fakultas'];
+                            $judul   = $r2['judul'];
 
                         ?>
                             <tr>
@@ -192,6 +209,7 @@ if (isset($_POST['simpan'])) { //untuk create
                                 <td scope="row"><?php echo $nim ?></td>
                                 <td scope="row"><?php echo $nama ?></td>
                                 <td scope="row"><?php echo $alamat ?></td>
+                                <td scope="row"><?php echo $judul ?></td>
                                 <td scope="row"><?php echo $fakultas ?></td>
                                 <td scope="row">
                                     <a href="index.php?op=edit&id=<?php echo $id ?>"><button type="button" class="btn btn-warning">Edit</button></a>
